@@ -1,7 +1,6 @@
 name: Scrape traffic data
 
 on:
-#   push:
   workflow_dispatch:
   schedule:
     - cron:  '*/5 * * * *'
@@ -11,12 +10,33 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Check out this repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.10"
+        cache: "pip"
+    - run: pip install -r requirements.txt    
     - name: Fetch latest data
       env:
         GOOGLE_MAPS_KEY: ${{ secrets.GOOGLE_MAPS_KEY }}
       run: |-
         curl "https://maps.googleapis.com/maps/api/directions/json?origin=47.3508495,8.5252917&destination=47.3709165,8.5242183&departure_time=now&key=$GOOGLE_MAPS_KEY" | jq > traffic.json
+    - name: Build SQLite database
+      run: |
+        rm -f traffic.db
+        git-history file traffic.db traffic.json \
+        --convert '
+        try:
+            duration_in_traffic = json.loads(content)["routes"][0]["legs"][0]["duration_in_traffic"]["value"]
+            return [{"id": "one", "duration_in_traffic": duration_in_traffic}]
+        except Exception as ex:
+            return []
+        ' \
+          --full-versions \
+          --id id
     - name: Commit and push if it changed
       run: |-
         git config user.name "Automated"
@@ -24,4 +44,5 @@ jobs:
         git add -A
         timestamp=$(date -u)
         git commit -m "Latest data: ${timestamp}" || exit 0
+        git pull --rebase
         git push
