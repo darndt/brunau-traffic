@@ -16,7 +16,7 @@ jobs:
       env:
         GOOGLE_MAPS_KEY: ${{ secrets.GOOGLE_MAPS_KEY }}
       run: |-
-        curl "https://maps.googleapis.com/maps/api/directions/json?origin=GG49%2BCH,%20Half%20Moon%20Bay%20CA&destination=FH78%2BQJ,%20Half%20Moon%20Bay,%20California&departure_time=now&key=$GOOGLE_MAPS_KEY" | jq > traffic.json
+        curl "https://maps.googleapis.com/maps/api/directions/json?origin=47.3508495,8.5252917&destination=47.3709165,8.5242183&departure_time=now&key=$GOOGLE_MAPS_KEY" | jq > traffic.json
     - name: Commit and push if it changed
       run: |-
         git config user.name "Automated"
