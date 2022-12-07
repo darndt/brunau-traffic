@@ -1,7 +1,14 @@
 {
   "geocoded_waypoints": [
     {
-      "geocoder_status": "UNKNOWN_ERROR"
+      "geocoder_status": "OK",
+      "place_id": "ChIJ6WfrZeYJkEcRGYkXLVGeihY",
+      "types": [
+        "establishment",
+        "point_of_interest",
+        "train_station",
+        "transit_station"
+      ]
     },
     {
       "geocoder_status": "OK",
@@ -47,6 +54,7 @@
             "lat": 47.3709253,
             "lng": 8.5242348
           },
+          "start_address": "Zürich Brunau, 8002 Zürich, Switzerland",
           "start_location": {
             "lat": 47.3508504,
             "lng": 8.5252868
