@@ -34,7 +34,7 @@
           "lng": 8.5228875
         }
       },
-      "copyrights": "Map data ©2022",
+      "copyrights": "Map data ©2022 Google",
       "legs": [
         {
           "distance": {
@@ -47,7 +47,7 @@
           },
           "duration_in_traffic": {
             "text": "4 mins",
-            "value": 253
+            "value": 230
           },
           "end_address": "Birmensdorferstrasse 67, 8004 Zürich, Switzerland",
           "end_location": {
